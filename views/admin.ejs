@@ -1,0 +1,63 @@
+<%- include("templates/header") %> 
+<div class="container">
+  <h1>Admin Page</h1>
+  <h3 style="text-transform: capitalize;">Hello, <%=user_name  %> </style></h3>
+
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <img src="/images/1.gif" class="img-fluid">
+    </div>
+    <div class="col-md-4 mb-2">
+      <img src="/images/2.gif" class="img-fluid">
+    </div>
+    <div class="col-md-4">
+      <img src="/images/3.gif" class="img-fluid">
+    </div>
+  </div>
+
+  <br>
+  <br>
+<div> <h2> Users:</h2></div>
+<br>
+<ul>
+<% users.forEach(user => { %>
+  <li style="border: 1px solid black; padding: 10px;list-style-type: none;">
+    <div style="display: inline-block "> <%= user.username %></div>
+    <% if(user.type === "admin") { %>
+      <div style="display: inline-block;">
+        <form action="/demoteUser" method="POST">
+          <input type="hidden" name="userId" value="<%= user._id %>">
+          <button class="btn btn-danger btn-sm ml-4 mr-4 " type="submit" style = "border-radius: 20px;">Demote to User</button>
+          <button class="btn btn-success btn-sm ml-4 mr-4" disabled style = "border-radius: 20px;">Promote to Admin</button>
+        </form>
+      </div>
+    <% } else { %>
+      <div style="display: inline-block; margin-left: 10px;">
+        <form action="/promoteUser" method="POST">
+          <input type="hidden" name="userId" value="<%= user._id %>">
+          <button class="btn btn-danger btn-sm ml-4 mr-4" disabled style = "border-radius: 20px;">Demote to User</button>
+          <button class="btn btn-success btn-sm ml-4 mr-4" style = "border-radius: 20px;">Promote to Admin</button>
+        </form>
+      </div>
+    <% } %>
+  </li>
+<% }); %>
+</ul>
+  <form action="/logout" method="POST">
+    <button type="submit" class="btn btn-primary mt-4">Sign Out</button>
+    <br>
+    <br>
+    
+  </form>
+ 
+</div>
+
+<%- include("templates/footer") %>
+
+<!-- <script>
+function demoteUser(user) {
+  /define the user to demote/
+
+  alert(user);
+}
+</script> -->
